@@ -1,3 +1,4 @@
+import java.util.Collections;
 import java.util.LinkedList;
 
 /**
@@ -6,29 +7,25 @@ import java.util.LinkedList;
 public class Kadry {
     public LinkedList<Pracownik> lista = new LinkedList();
 
-    public void addPracownik(){
-
-    }
-
-    public Pracownik findPracownik(Pesel _pesel){
+    public Pracownik findPracownik(String _pesel){
         for (int i = 0; i < lista.size(); i++) {
-            if(lista.get(i).getPesel().getPesel().equals(_pesel.getPesel())) return lista.get(i);
+            if(lista.get(i).getPesel().equals(_pesel)) return lista.get(i);
         }
         System.out.println("W bazie nie ma pracownika o takim nr pesel");
         return lista.getFirst();
     }
 
-    public int findPracownikIndex(Pesel _pesel){
+    public int findPracownikIndex(String _pesel){
         for (int i = 0; i < lista.size(); i++) {
-            if(lista.get(i).getPesel().getPesel().equals(_pesel.getPesel())) return i;
+            if(lista.get(i).getPesel().equals(_pesel)) return i;
         }
         System.out.println("W bazie nie ma pracownika o takim nr pesel");
         return -1;
     }
 
-    public void deletePracownik(Pesel _pesel){
+    public void deletePracownik(String _pesel){
         for (int i = 0; i < lista.size(); i++) {
-            if(lista.get(i).getPesel().getPesel().equals(_pesel.getPesel())) lista.remove(i);
+            if(lista.get(i).getPesel().equals(_pesel)) lista.remove(i);
         }
     }
 
@@ -46,6 +43,32 @@ public class Kadry {
 
     public double getNettoPracownik(int i){
         return lista.get(i).getWynagrodzenieNetto();
+    }
+
+    public void print(){
+        for(int i=0; i<lista.size(); i++){
+            lista.get(i).printPracownik();
+            System.out.println("#####################");
+        }
+    }
+
+    public void sort(){
+        LinkedList<Pracownik> wynik = new LinkedList<>();
+        Student tmp = new Student("96070612014",1000);
+
+        while(lista.size()>0){
+            int min = 0;
+
+            for(int i=0; i<lista.size(); i++){
+                if(tmp.compare(lista.get(min),lista.get(i)) > 0) min = i;
+            }
+
+            wynik.add(lista.get(min));
+            lista.remove(min);
+        }
+
+        lista = (LinkedList<Pracownik>) wynik.clone();
+
     }
 
 }

@@ -31,10 +31,10 @@ public class Polibiusz implements Algorithm {
 
     public String decryptWord(String word){
         String output = "";
-        int tmp1,tmp2;
-        for(int i=0; i<word.length(); i+=2){
+        int tmp1,tmp2,i=0;
+        for(; i+2<word.length(); i+=2){
             tmp1 = (int) word.charAt(i);
-            tmp2 = (int) word.charAt(i+1);
+            tmp2 = (int) word.charAt(i + 1);
             if(tmp1 < 49 || tmp1 >53){
                 output = output + word.charAt(i);
                 i--;
@@ -43,6 +43,9 @@ public class Polibiusz implements Algorithm {
                 output = output + tab[tmp1-49][tmp2-49];
             }
         }
+
+        for(;i<word.length();i++) output = output + word.charAt(i);
+
         return output;
     }
 }

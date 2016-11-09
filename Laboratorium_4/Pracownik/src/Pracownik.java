@@ -1,14 +1,24 @@
-import java.util.Scanner;
+import java.util.Comparator;
 
 /**
  * Created by Tomek on 2016-11-08.
  */
-public abstract class Pracownik {
+public abstract class Pracownik implements Comparator<Pracownik>  {
 
-    private Pesel pesel;
+    @Override
+    // p1 < p2 --> -1
+    // p1 = p2 --> 0
+    // p1 > p2 --> 1
+    public int compare(Pracownik p1, Pracownik p2){
+        if(p1.getWynagrodzenieBrutto() < p2.getWynagrodzenieBrutto()) return 1;
+        else if(p1.getWynagrodzenieBrutto() == p2.getWynagrodzenieBrutto()) return 0;
+        return -1;
+    }
+
+    private String pesel;
     private double wynagrodzenieBrutto;
 
-    public Pesel getPesel(){
+    public String getPesel(){
         return pesel;
     }
 
@@ -19,22 +29,16 @@ public abstract class Pracownik {
     public void setWynagrodzenieBrutto(double _brutto){
         wynagrodzenieBrutto = _brutto;
     }
-
-    Pracownik(Pesel _pesel, double _Brutto){
-        pesel = _pesel;
-        wynagrodzenieBrutto = _Brutto;
+    public void setPesel(String _pesel) throws IllegalStateException {
+        if(Pesel.checkControlSum(_pesel)) {
+            pesel = _pesel;
+        }
+        else throw new IllegalStateException("Niepoprawny format pesel");
     }
 
-    Pracownik(){
-        insertPracownik();
-    }
-
-    public void insertPracownik(){
-        Scanner odczyt = new Scanner(System.in);
-        String _pesle = odczyt.next();
-        double _brutto = odczyt.nextDouble();
-        pesel = new Pesel(_pesle);
-        wynagrodzenieBrutto = _brutto;
+    Pracownik(String _pesel, double _Brutto) throws IllegalStateException{
+        setWynagrodzenieBrutto(_Brutto);
+        setPesel(_pesel);
     }
 
     public abstract double getWynagrodzenieNetto();

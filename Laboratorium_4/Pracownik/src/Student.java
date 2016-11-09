@@ -3,12 +3,18 @@
  */
 public class Student extends Pracownik{
 
-    Student(Pesel _pesel, double _brutto){
-        super(_pesel,_brutto);
+    public int compare(Student p1){
+
+        return 1;
     }
 
-    Student(){
-        super();
+    boolean equals(Student p2){
+
+        return true;
+    }
+
+    Student(String _pesel, double _brutto){
+        super(_pesel,_brutto);
     }
 
     @Override
@@ -18,6 +24,6 @@ public class Student extends Pracownik{
 
     @Override
     public void printPracownik() {
-        System.out.println("PESEL: " + this.getPesel().getPesel() +"\nBRUTTO: " + this.getWynagrodzenieBrutto() + "\nNETTO: " + this.getWynagrodzenieNetto());
+        System.out.println("PESEL: " + this.getPesel() +"\nBRUTTO: " + this.getWynagrodzenieBrutto() + "\nNETTO: " + this.getWynagrodzenieNetto());
     }
 }

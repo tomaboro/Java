@@ -3,12 +3,18 @@
  */
 public class PracownikEtatowy extends Pracownik {
 
-    PracownikEtatowy(Pesel _pesel, double _brutto){
-        super(_pesel,_brutto);
+    public int compare(PracownikEtatowy p1){
+
+        return 1;
     }
 
-    PracownikEtatowy(){
-        super();
+    boolean equals(PracownikEtatowy p2){
+
+        return true;
+    }
+
+    PracownikEtatowy(String _pesel, double _brutto){
+        super(_pesel,_brutto);
     }
 
     @Override
@@ -18,6 +24,6 @@ public class PracownikEtatowy extends Pracownik {
 
     @Override
     public void printPracownik() {
-        System.out.println("PESEL: " + this.getPesel().getPesel() +"\nBRUTTO: " + this.getWynagrodzenieBrutto() + "\nNETTO: " + this.getWynagrodzenieNetto());
+        System.out.println("PESEL: " + this.getPesel() +"\nBRUTTO: " + this.getWynagrodzenieBrutto() + "\nNETTO: " + this.getWynagrodzenieNetto());
     }
 }
