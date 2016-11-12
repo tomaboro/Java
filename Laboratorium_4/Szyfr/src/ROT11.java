@@ -2,8 +2,8 @@
  * Created by Tomek on 2016-11-08.
  */
 public class ROT11 implements Algorithm {
-    public static String Aplhabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    public static int rot = 13;
+    private static final String Aplhabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private static final int rot = 11;
 
     public String cryptWord(String word){
         String output="";

@@ -2,7 +2,7 @@
  * Created by Tomek on 2016-11-08.
  */
 public class Polibiusz implements Algorithm {
-    static char tab[][] = {{'A','B','C','D','E'},{'F','G','H','I','K'},{'L','M','N','O','P'},{'Q','R','S','T','U'},{'V','W','X','Y','Z'}};
+    private static char tab[][] = {{'A','B','C','D','E'},{'F','G','H','I','K'},{'L','M','N','O','P'},{'Q','R','S','T','U'},{'V','W','X','Y','Z'}};
     public String cryptWord(String word) {
         String output = "";
         boolean dodano = false;
@@ -32,7 +32,7 @@ public class Polibiusz implements Algorithm {
     public String decryptWord(String word){
         String output = "";
         int tmp1,tmp2,i=0;
-        for(; i+2<word.length(); i+=2){
+        for(; i+1<word.length(); i+=2){
             tmp1 = (int) word.charAt(i);
             tmp2 = (int) word.charAt(i + 1);
             if(tmp1 < 49 || tmp1 >53){
