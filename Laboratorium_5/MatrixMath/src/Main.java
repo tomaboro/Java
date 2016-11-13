@@ -6,11 +6,17 @@ import java.io.FileNotFoundException;
  */
 public class Main {
     public static  void main( String [] argvc){
-        File file;
+        File file1,file2;
         try {
-            file = new File("C:\\JAVA\\Laboratorium_5\\MatrixMath\\out\\production\\MatrixMath\\m.txt");
-            Matrix m1 = new Matrix(file);
-            m1.printMatrix();
+            file1 = new File("C:\\JAVA\\Laboratorium_5\\MatrixMath\\out\\production\\MatrixMath\\m.txt");
+            file2 = new File("C:\\JAVA\\Laboratorium_5\\MatrixMath\\out\\production\\MatrixMath\\mm.txt");
+            DummyMatrix m1 = new DummyMatrix(file1);
+            DummyMatrix m2 = new DummyMatrix(file2);
+            Matrix m3;
+
+            m3 = m1.razy(m2);
+            m3.printMatrix();
+
         } catch(NotMatrixFileException e){}
         catch (FileNotFoundException e){}
 
