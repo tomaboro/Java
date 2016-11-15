@@ -2,62 +2,58 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 /**
  * Created by Tomek on 14.11.2016.
  */
 public class Delay {
-    public static void delay(String in,String out,int delay, int fps)throws FileNotFoundException,MatrixDimensionsException{
-        File f_in = new File(in);
-        File f_out = new File(out);
 
+    public static void delay(String in,String out,int delay, int fps)throws FileNotFoundException,LineWrongFormat,TimeWrongFormat,NegativeDisplayTime{
+        //Plik, z którego bd odczytywać
+        File f_in = new File(in);
+        //Plik, do którego bd zapisywać
+        PrintWriter zapis = new PrintWriter(out);
+        //line - licznik linii
+        //start stop to odpowiednio klatka początku i końca napisu
+        int line = 0;
+        double start,stop;
+        //tresc napisów bez {}{}
+        String tresc;
 
         try{
-            Scanner line = new Scanner(in);
-            Scanner scan;
-            String znak;
-            String liczba;
-            int klatka;
-            PrintWriter zapis = new PrintWriter(f_out);
+            //scan wczytuje po linii z pliku
+            //pattern wczytuje kolejne wyrazy oddzielone delimiterem { lub }
+            Scanner scan = new Scanner(f_in);
+            Scanner pattern;
 
-            while(line.hasNextLine()){
-                scan = new Scanner(line.nextLine());
-                scan.useDelimiter("");
+            while(scan.hasNextLine()) {
+                String tmp = scan.nextLine();
 
-                //Czytamy klatkę początkową
-                znak = scan.next();
-                if (znak.equals("{")){
-                    znak = scan.next();
-                    while(!znak.equals("}")){
-                        liczba = liczba + znak;
-                    }
-                    klatka = this.StringToInt();
-                }
-                else throw new MatrixDimensionsException;
+                line++;
 
-                //Czytamy klatkę końcową
-                znak = scan.next();
-                if (znak.equals("{")) {
-                    znak = scan.next();
-                    while (!znak.equals("}")) {
-                        liczba = liczba + znak;
-                    }
-                    try {
-                        klatka = Integer.parseInt(liczba);
-                    }catch(NumberFormatException e){}
-                }
-                else throw new MatrixDimensionsException;
+                if(!Pattern.matches("^\\{.*\\}\\{.*\\}.*", tmp)) throw new LineWrongFormat(line,tmp);
+                if(!Pattern.matches("^\\{[0-9]*\\}\\{[0-9]*\\}.*", tmp)) throw new TimeWrongFormat(line,tmp);
 
-                //Przesuwamy klatke
+                pattern = new Scanner(tmp).useDelimiter("[\\{\\}]");
+                start = Double.parseDouble(pattern.next());
+                pattern.next();
+                stop = Double.parseDouble(pattern.next());
 
+                if(start > stop) throw new NegativeDisplayTime(line,tmp);
 
-                //Zapisujemy do pliku
+                tresc = pattern.next();
+
+                start = start + delay*fps*0.001;
+                System.out.println(delay*fps*0.001);
+                stop = stop + delay*fps*0.001;;
+
+                zapis.println("{"+(int) Math.round(start)+"}{"+(int) Math.round(stop)+"}"+tresc);
             }
-
         }catch(FileNotFoundException e){throw e;}
+        finally {
+            zapis.close();
+        }
     }
 
-    private int StringToInt(String liczba){
-
-    }
 }
