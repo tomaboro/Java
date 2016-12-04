@@ -1,11 +1,14 @@
 import java.awt.*;
 import java.util.LinkedList;
+import java.util.ListIterator;
+import java.util.Scanner;
 
 /**
  * Created by Tomek on 27.11.2016.
  */
 public class Test {
     public static void main(String[] args) {
+
         LinkedList<Shape> lista = new LinkedList<>();
         int y = 20;
 

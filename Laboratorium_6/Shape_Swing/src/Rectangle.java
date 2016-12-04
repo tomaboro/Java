@@ -23,8 +23,7 @@ public class Rectangle extends Shape {
         Rectangle2D rectangle = new Rectangle2D.Double(this.x, this.y, 80, 50);
 
 
-        GradientPaint grad = new GradientPaint(0,0,this.color,100, 0,color.WHITE);
-        g2d.setPaint(grad);
+        g2d.setColor(this.color);
         g2d.fill(rectangle);
 
         BasicStroke dashed = new BasicStroke(2);
@@ -34,8 +33,8 @@ public class Rectangle extends Shape {
     }
 
     public boolean isPressed(int x, int y){
-        if((x >= this.x)&&(x <= this.x + 80)&&(y >= this.y)&&(y <= this.y + 50)) return true;
-        else return false;
+        Rectangle2D rectangle = new Rectangle2D.Double(this.x, this.y, 80, 50);
+        return rectangle.contains(x,y);
     }
 
 }

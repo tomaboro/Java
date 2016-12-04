@@ -14,6 +14,7 @@ public class MyFrame extends JFrame {
         setSize(250,400);
         setResizable(false);
         setLocation(0,0);
+        getContentPane().setBackground(Color.darkGray);
         setLayout(new BorderLayout());
 
         JPanel panel = new MyPanel(lista);

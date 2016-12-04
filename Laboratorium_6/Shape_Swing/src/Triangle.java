@@ -21,8 +21,7 @@ public class Triangle extends Shape {
 
         Polygon polygon  = new Polygon(new int[] {this.x, this.x+30, this.x+60}, new int[] {this.y+50, this.y, this.y+50}, 3);
 
-        GradientPaint grad = new GradientPaint(0,0,this.color,100, 0,color.WHITE);
-        g2d.setPaint(grad);
+        g2d.setColor(this.color);
         g2d.fill(polygon);
 
         BasicStroke dashed = new BasicStroke(2);
@@ -32,7 +31,7 @@ public class Triangle extends Shape {
     }
 
     public boolean isPressed(int x, int y){
-        if((x > this.x)&&(x < this.x + 60)&&(y > this.y)&&(y < this.y + 50)) return true;
-        else return false;
+        Polygon polygon  = new Polygon(new int[] {this.x, this.x+30, this.x+60}, new int[] {this.y+50, this.y, this.y+50}, 3);
+        return polygon.contains(x,y);
     }
 }

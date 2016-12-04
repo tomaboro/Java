@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.geom.*;
 import java.util.LinkedList;
 import java.util.ListIterator;
@@ -11,40 +12,20 @@ import javax.swing.*;
  * Created by Tomek on 27.11.2016.
  */
 
-public class MyPanel extends JPanel implements MouseListener {
+public class MyPanel extends JPanel implements MouseListener, MouseMotionListener {
 
-    LinkedList<Shape> lista;
-    boolean clicked = false;
-    int tmp;
+    private LinkedList<Shape> lista;
+    private boolean clicked = false;
+    private int tmp;
+    private int tmp_x;
+    private int tmp_y;
 
     public MyPanel(LinkedList<Shape> _lista) {
         setPreferredSize(new Dimension(400, 400));
         addMouseListener(this);
+        addMouseMotionListener(this);
         lista = _lista;
     };
-
-    public void mouseClicked(MouseEvent event){
-        /*if(!clicked) {
-            for (int i = 0; i < lista.size(); i++) {
-                if (lista.get(i).isPressed(event.getX(), event.getY())) {
-                    tmp = i;
-                    clicked = true;
-                    lista.get(tmp).x = event.getX();
-                    lista.get(tmp).y = event.getY();
-                    break;
-                }
-            }
-        }
-        else{
-            if(tmp != -1) {
-                lista.get(tmp).x = event.getX();
-                lista.get(tmp).y = event.getY();
-                tmp = -1;
-            }
-            clicked = false;
-            repaint();
-        }*/
-        }
 
     @Override
     protected void paintComponent(Graphics g) {
@@ -61,31 +42,46 @@ public class MyPanel extends JPanel implements MouseListener {
         setPreferredSize(new Dimension(400,1000));
     }
 
-    @Override
-    public void mouseReleased(MouseEvent e) {
-        System.out.println();
-    }
+    public void mouseDragged(MouseEvent event){
 
-    @Override
-    public void mousePressed(MouseEvent event) {
-        for (int i = 0; i < lista.size(); i++) {
-            if (lista.get(i).isPressed(event.getX(), event.getY())) {
-                lista.get(i).x = event.getX();
-                lista.get(i).y = event.getY();
-                break;
+        if(!clicked) {
+            tmp = -1;
+            for (int i = lista.size()-1; i > -1; i--) {
+                if (lista.get(i).isPressed(event.getX(), event.getY())) {
+                    tmp_x = event.getX() - lista.get(i).x ;
+                    tmp_y = event.getY() - lista.get(i).y;
+                    tmp = i;
+                    clicked = true;
+                    break;
+                }
             }
         }
+        else if(clicked && tmp != -1){
+            lista.get(tmp).moveShape(event.getX()-tmp_x,event.getY()-tmp_y);
+        }
+
         repaint();
-        System.out.println((tmp++) + ": mousePressed");
     }
 
     @Override
-    public void mouseEntered(MouseEvent e) {
-        System.out.println("mouseEntered");
+    public void mouseReleased(MouseEvent e) {
+        clicked = false;
+        tmp = -1;
     }
 
     @Override
-    public void mouseExited(MouseEvent e) {
-        System.out.println("mouseExited");
+    public void mouseClicked(MouseEvent event){
     }
+
+    @Override
+    public void mousePressed(MouseEvent event) {}
+
+    @Override
+    public void mouseEntered(MouseEvent e) {}
+
+    @Override
+    public void mouseExited(MouseEvent e) {}
+
+    @Override
+    public void mouseMoved(MouseEvent e){}
 }
