@@ -68,7 +68,7 @@ public class EmailMessage {
         props.put("mail.smtp.port", "587");
 
         final String username = this.from;
-        final String password = "Djgtu6qc9";
+        final String password = "xyzxyzxyz";
 
         Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
