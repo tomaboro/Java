@@ -15,17 +15,19 @@ public class Main {
 
         try{
             while(komenda != 6) {
-                System.out.println("======================");
+                System.out.println("========**##**========");
                 System.out.println("Co chcesz zrobić ?");
                 System.out.println("1.Wyświetl całą bazę danych.");
                 System.out.println("2.Wyszukaj po numerze ISBN.");
                 System.out.println("3.Usuń pozycję z bazy danych(Autor).");
                 System.out.println("4.Usuń pozycję z bazy danych(ISBN).");
                 System.out.println("5.Dodaj pozycję");
-                System.out.println("======================");
+                System.out.println("6.Zakończ program");
+                System.out.println("========**##**========");
                 System.out.print("Podaj numer komendy:  ");
-
                 komenda = odczytINT.nextInt();
+                System.out.println("========**##**========");
+
                 switch (komenda) {
                     case 1:
                         db.listDB();
