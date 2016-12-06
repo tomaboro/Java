@@ -67,7 +67,7 @@ public class Main {
                 }
             }
         }catch(Exception e){
-            e.getMessage();
+            System.out.println("Błąd krytyczny! Nie obsługiwany format komendy!");
         }
 
     }

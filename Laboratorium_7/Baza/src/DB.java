@@ -180,42 +180,5 @@ public class DB {
             }
         }
     }
-
-    public void listNames() {
-        try {
-            connect();
-            stmt = conn.createStatement();
-
-            // Wyciagamy wszystkie pola z kolumny name
-            // znajdujące się w tabeli users
-            rs = stmt.executeQuery("SELECT title FROM books");
-
-            while (rs.next()) {
-                String name = rs.getString(1);
-                System.out.println("Uzytkownik: " + name);
-            }
-        } catch (SQLException ex) {
-            // handle any errors
-
-        } finally {
-            // zwalniamy zasoby, które nie będą potrzebne
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException sqlEx) {
-                } // ignore
-                rs = null;
-            }
-
-            if (stmt != null) {
-                try {
-                    stmt.close();
-                } catch (SQLException sqlEx) {
-                } // ignore
-
-                stmt = null;
-            }
-        }
-    }
 }
 
