@@ -20,7 +20,7 @@ public class Main {
             //Loading a file with a model
             XTTModel model = null;
             SourceFile hmr_threat_monitor =
-                    new SourceFile("C:\\JAVA\\Test\\threat-monitor.hmr.txt");
+                    new SourceFile("C:\\Studia\\Java\\Test\\threat-monitor.hmr.txt");
             HMRParser parser = new HMRParser();
 
             //Parsing the file with the model
@@ -75,7 +75,7 @@ public class Main {
                 for(Rule r : t.getRules()){
                     System.out.print("Rule id: "+r.getId()+ ":\n\tIF ");
                     for(Formulae f : r.getConditions()){
-                        System.out.print(f.getAttribute().getName()+" "+f.getOp()+" "+f.toString()+", ");
+                        System.out.print(f.getAttribute().getName()+" "+f.getOp()+" ");
                     }
 
                     System.out.println("THEN ");
@@ -92,81 +92,9 @@ public class Main {
                 System.out.println();
                 System.out.println("=============================");
 
-                // Creating StateElements objects, one for each attribute
-                StateElement hourE = new StateElement();
-                StateElement dayE = new StateElement();
-                StateElement locationE = new StateElement();
-                StateElement activityE = new StateElement();
-
-// Setting the values of the state elements
-                hourE.setAttributeName("hour");
-                hourE.setValue(new SimpleNumeric(16d));
-
-                dayE.setAttributeName("day");
-                dayE.setValue(new SimpleSymbolic("mon",1));
-
-                locationE.setAttributeName("location");
-                locationE.setValue(new SimpleSymbolic("work"));
-
-                activityE.setAttributeName("activity");
-                activityE.setValue(new SimpleSymbolic("walking"));
-
-
-//Creating a XTTState object that agregates all the StateElements
-                State XTTstate = new State();
-                XTTstate.addStateElement(hourE);
-                XTTstate.addStateElement(dayE);
-                XTTstate.addStateElement(locationE);
-                XTTstate.addStateElement(activityE);
-
-// Printing current state (it should be null for all attributes,
-// the state will be set later). The state can be set before inference
-// by calling HeaRT.getWm().setCurrentState(...)
-                System.out.println("Printing current state");
-                State current = HeaRT.getWm().getCurrentState(model);
-                for(StateElement se : current){
-                    System.out.println("Attribute "+se.getAttributeName()+" = "+se.getValue());
-                }
 
             }
-            try{
-// Fixed order inference -- we give all tables names
-// in an order in which they should be fired
-                HeaRT.fixedOrderInference(model,
-                        new String[]{"DayTime","Today","Actions","Threats"},
-                        new Configuration.Builder()
-                                .setInitialState(XTTstate)
-                                .build());
 
-// Data driven inference -- we give only the starting tables names.
-// The algorithm crawls the table network and fires only the necessary tables.
-                HeaRT.dataDrivenInference(model,
-                        new String[]{"DayTime","Today"},
-                        new Configuration.Builder()
-                                .setInitialState(XTTstate)
-                                .build());
-
-// Goal inference -- we only give the table which produces the attribute value
-// that we are interested in.
-// The algorithm crawls the table network and fires only the necessary tables.
-                HeaRT.goalDrivenInference(model,
-                        new String[]{"Threats"},
-                        new Configuration.Builder()
-                                .setInitialState(XTTstate)
-                                .build());
-
-            }catch(UnsupportedOperationException e){
-                e.printStackTrace();
-            } catch (AttributeNotRegisteredException e) {
-                e.printStackTrace();
-            }
-
-
-            System.out.println("Printing current state (after inference");
-            current = HeaRT.getWm().getCurrentState(model);
-            for(StateElement se : current){
-                System.out.println("Attribute "+se.getAttributeName()+" = "+se.getValue());
-            }
         } catch (Exception allExceptions){
             // Simplified for the purpose of the example
         }
